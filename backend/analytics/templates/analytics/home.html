@@ -1,0 +1,115 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Analytics Dashboard</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f1f5f9;
+            margin: 0;
+            padding: 30px;
+        }
+
+        h1 {
+            color: #1e3a8a;
+            text-align: center;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: #64748b;
+            margin-bottom: 30px;
+        }
+
+        .container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 20px;
+            max-width: 1000px;
+            margin: auto;
+        }
+
+        .card {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            text-align: center;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.08);
+        }
+
+        .card h2 {
+            color: #475569;
+            font-size: 18px;
+        }
+
+        .number {
+            font-size: 36px;
+            font-weight: bold;
+            color: #2563eb;
+        }
+
+        .back {
+            display: block;
+            width: fit-content;
+            margin: 35px auto;
+            padding: 12px 22px;
+            background: #1e40af;
+            color: white;
+            text-decoration: none;
+            border-radius: 7px;
+        }
+
+        .back:hover {
+            background: #1e3a8a;
+        }
+    </style>
+</head>
+
+<body>
+
+    <h1>Analytics Dashboard</h1>
+
+    <p class="subtitle">
+        Research, IPR, Innovation and Startup Overview
+    </p>
+
+    <div class="container">
+
+<a href="/api/projects/" style="text-decoration: none; color: inherit;">
+    <div class="card">
+        <h2>Research Projects</h2>
+        <div class="number">{{ research_count }}</div>
+    </div>
+</a>
+
+<a href="/api/innovation/page/" style="text-decoration: none; color: inherit;">
+    <div class="card">
+        <h2>Innovations</h2>
+        <div class="number">{{ innovation_count }}</div>
+    </div>
+</a>
+
+<a href="/api/ipr/page/" style="text-decoration: none; color: inherit;">
+    <div class="card">
+        <h2>IPR Records</h2>
+        <div class="number">{{ ipr_count }}</div>
+    </div>
+</a>
+
+<a href="/api/startup/page/" style="text-decoration: none; color: inherit;">
+    <div class="card">
+        <h2>Startups</h2>
+        <div class="number">{{ startup_count }}</div>
+    </div>
+</a>
+
+    </div>
+
+    <a href="/" class="back">Back to Dashboard</a>
+
+</body>
+</html>

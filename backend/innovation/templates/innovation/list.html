@@ -1,0 +1,155 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Innovations</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f1f5f9;
+            margin: 0;
+            padding: 30px;
+        }
+
+        h1 {
+            text-align: center;
+            color: #1e3a8a;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 30px auto;
+            background: white;
+            padding: 25px;
+            border-radius: 12px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            padding: 14px;
+            border-bottom: 1px solid #ddd;
+            text-align: left;
+        }
+
+        th {
+            background: #1e40af;
+            color: white;
+        }
+
+        .button {
+            display: inline-block;
+            padding: 9px 14px;
+            margin: 4px;
+            background: #1e40af;
+            color: white;
+            text-decoration: none;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .delete {
+            background: #dc2626;
+        }
+
+        .message {
+            padding: 10px;
+            background: #dcfce7;
+            color: #166534;
+            border-radius: 5px;
+            margin-bottom: 15px;
+        }
+
+        .empty {
+            text-align: center;
+            color: #64748b;
+        }
+    </style>
+</head>
+
+<body>
+
+    <h1>Innovations</h1>
+
+    <div class="container">
+
+        <h2>Innovation Records</h2>
+
+        {% if messages %}
+            {% for message in messages %}
+                <div class="message">{{ message }}</div>
+            {% endfor %}
+        {% endif %}
+
+        {% if can_manage %}
+            <a href="{% url 'add-innovation' %}" class="button">
+                + Add Innovation
+            </a>
+        {% endif %}
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Sr. No.</th>
+                    <th>Innovation Details</th>
+
+                    {% if can_manage %}
+                        <th>Actions</th>
+                    {% endif %}
+                </tr>
+            </thead>
+
+            <tbody>
+                {% for innovation in innovations %}
+                <tr>
+                    <td>{{ forloop.counter }}</td>
+                    <td>{{ innovation.title }}</td>
+
+                    {% if can_manage %}
+                    <td>
+                        <a href="{% url 'edit-innovation' innovation.id %}"
+                           class="button">
+                            Edit
+                        </a>
+
+                        <form method="POST"
+                              action="{% url 'delete-innovation' innovation.id %}"
+                              style="display:inline;">
+
+                            {% csrf_token %}
+
+                            <button type="submit"
+                                    class="button delete"
+                                    onclick="return confirm('Are you sure you want to delete this innovation?');">
+                                Delete
+                            </button>
+                        </form>
+                    </td>
+                    {% endif %}
+                </tr>
+
+                {% empty %}
+                <tr>
+                    <td colspan="3" class="empty">
+                        No innovations available.
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <a href="/analytics/" class="button">
+            Back to Analytics
+        </a>
+
+    </div>
+
+</body>
+</html>

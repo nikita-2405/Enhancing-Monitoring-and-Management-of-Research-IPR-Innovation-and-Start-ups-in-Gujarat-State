@@ -1,0 +1,15 @@
+venv/
+backend/venv/
+__pycache__/
+*.py[cod]
+*.log
+staticfiles/
+media/
+*.sqlite3
+.env
+.env.*
+!.env.example
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db

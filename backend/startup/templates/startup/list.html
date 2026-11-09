@@ -1,0 +1,146 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Startup Records</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f1f5f9;
+            margin: 0;
+            padding: 30px;
+        }
+
+        h1 {
+            text-align: center;
+            color: #1e3a8a;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 30px auto;
+            background: white;
+            padding: 25px;
+            border-radius: 12px;
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            padding: 12px;
+            border-bottom: 1px solid #ddd;
+            text-align: left;
+        }
+
+        th {
+            background: #1e40af;
+            color: white;
+        }
+
+        .back, .add, .edit, .delete {
+            display: inline-block;
+            padding: 9px 14px;
+            color: white;
+            text-decoration: none;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            margin: 3px;
+        }
+
+        .back { background: #1e40af; }
+        .add { background: #15803d; }
+        .edit { background: #d97706; }
+        .delete { background: #dc2626; }
+
+        .message {
+            padding: 10px;
+            background: #dcfce7;
+            color: #166534;
+            border-radius: 6px;
+            margin-bottom: 15px;
+        }
+
+        .actions {
+            white-space: nowrap;
+        }
+    </style>
+</head>
+
+<body>
+
+    <h1>Startup Records</h1>
+
+    <div class="container">
+        <h2>Registered Startup Records</h2>
+
+        {% if messages %}
+            {% for message in messages %}
+                <div class="message">{{ message }}</div>
+            {% endfor %}
+        {% endif %}
+
+        {% if can_manage %}
+            <a href="{% url 'add-startup' %}" class="add">+ Add Startup</a>
+        {% endif %}
+
+        <table>
+            <tr>
+                <th>ID</th>
+                <th>Startup Name</th>
+                <th>Founder</th>
+                <th>Institution</th>
+                <th>Sector</th>
+                <th>Stage</th>
+                <th>Status</th>
+                <th>Founded Date</th>
+                {% if can_manage %}
+                    <th>Actions</th>
+                {% endif %}
+            </tr>
+
+            {% for startup in startups %}
+            <tr>
+                <td>{{ startup.id }}</td>
+                <td>{{ startup.name }}</td>
+                <td>{{ startup.founder_name }}</td>
+                <td>{{ startup.institution }}</td>
+                <td>{{ startup.sector }}</td>
+                <td>{{ startup.stage }}</td>
+                <td>{{ startup.status }}</td>
+                <td>{{ startup.founded_date }}</td>
+
+                {% if can_manage %}
+                <td class="actions">
+                    <a href="{% url 'edit-startup' startup.id %}" class="edit">Edit</a>
+
+                    <form method="POST"
+                          action="{% url 'delete-startup' startup.id %}"
+                          style="display:inline;"
+                          onsubmit="return confirm('Are you sure you want to delete this startup?');">
+                        {% csrf_token %}
+                        <button type="submit" class="delete">Delete</button>
+                    </form>
+                </td>
+                {% endif %}
+            </tr>
+
+            {% empty %}
+            <tr>
+                <td colspan="9">No startups available.</td>
+            </tr>
+            {% endfor %}
+        </table>
+
+        <a href="/analytics/" class="back">Back to Analytics</a>
+    </div>
+
+</body>
+</html>

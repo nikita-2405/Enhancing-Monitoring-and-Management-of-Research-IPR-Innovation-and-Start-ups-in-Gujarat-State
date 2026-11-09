@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Login - Gujarat Research & Innovation System</title>
+</head>
+
+<body>
+
+    <h1>Gujarat Research, IPR, Innovation & Startup System</h1>
+
+    <h2>Login</h2>
+
+    <form method="post">
+        {% csrf_token %}
+
+        {{ form.as_p }}
+
+        <button type="submit">Login</button>
+    </form>
+
+</body>
+</html>

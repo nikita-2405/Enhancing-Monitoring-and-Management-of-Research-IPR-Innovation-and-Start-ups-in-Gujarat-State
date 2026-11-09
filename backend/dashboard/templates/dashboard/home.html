@@ -1,0 +1,174 @@
+
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gujarat Research & Innovation Dashboard</title>
+    <link rel="stylesheet" href="{% static 'dashboard/style.css' %}">
+</head>
+
+<body>
+
+    <div class="header">
+        <h1>Gujarat Research, IPR, Innovation & Startup Dashboard</h1>
+
+        <div class="navbar">
+            <a href="/">Dashboard</a>
+
+            {% if is_admin or role == "Researcher" or role == "Policymaker" %}
+                <a href="/api/projects/">Research</a>
+            {% endif %}
+
+            {% if is_admin or role == "Innovator" or role == "Policymaker" %}
+                <a href="/api/innovation/page/">Innovation</a>
+            {% endif %}
+
+            {% if is_admin or role == "IPR Professional" or role == "Policymaker" %}
+                <a href="/api/ipr/page/">IPR</a>
+            {% endif %}
+
+            {% if is_admin or role == "Entrepreneur" or role == "Policymaker" %}
+                <a href="/api/startup/page/">Startups</a>
+            {% endif %}
+
+            {% if request.user.is_staff %}
+                <a href="/admin/">Admin</a>
+            {% endif %}
+
+            <a href="/logout/">Logout</a>
+        </div>
+    </div>
+
+    <div class="container">
+
+        <p class="subtitle">
+            Welcome, <strong>{{ username }}</strong>!
+            <br>
+            Role: <strong>{% if is_admin %}Administrator{% else %}{{ role }}{% endif %}</strong>
+            <br>
+            Welcome to the central monitoring and management system.
+        </p>
+
+        {% if is_admin %}
+            <div class="role-message">
+                <strong>Administrator Dashboard</strong>
+                <br>
+                Manage and monitor research, innovation, IPR and startup activities across Gujarat.
+            </div>
+
+        {% elif role == "Researcher" %}
+            <div class="role-message">
+                <strong>Researcher Dashboard</strong>
+                <br>
+                Manage and monitor research projects and their progress.
+            </div>
+
+        {% elif role == "Innovator" %}
+            <div class="role-message">
+                <strong>Innovator Dashboard</strong>
+                <br>
+                Manage innovations and track their development.
+            </div>
+
+        {% elif role == "IPR Professional" %}
+            <div class="role-message">
+                <strong>IPR Professional Dashboard</strong>
+                <br>
+                Monitor patents, copyrights, trademarks and applications.
+            </div>
+
+        {% elif role == "Entrepreneur" %}
+            <div class="role-message">
+                <strong>Entrepreneur Dashboard</strong>
+                <br>
+                Manage startup information, stages and status.
+            </div>
+
+        {% elif role == "Policymaker" %}
+            <div class="role-message">
+                <strong>Policymaker Dashboard — Read Only</strong>
+                <br>
+                View research, innovation, IPR and startup information to support monitoring and policy decisions.
+            </div>
+
+        {% else %}
+            <div class="role-message">
+                <strong>Welcome to the system</strong>
+                <br>
+                Your account does not currently have a project role assigned.
+            </div>
+        {% endif %}
+
+        <div class="cards">
+
+            {% if is_admin or role == "Researcher" or role == "Policymaker" %}
+                <a href="/api/projects/" class="card-link">
+                    <div class="card">
+                        <h2>{{ research_count }}</h2>
+                        <p>Research Projects</p>
+                    </div>
+                </a>
+            {% endif %}
+
+            {% if is_admin or role == "Innovator" or role == "Policymaker" %}
+                <a href="/api/innovation/page/" class="card-link">
+                    <div class="card">
+                        <h2>{{ innovation_count }}</h2>
+                        <p>Innovations</p>
+                    </div>
+                </a>
+            {% endif %}
+
+            {% if is_admin or role == "IPR Professional" or role == "Policymaker" %}
+                <a href="/api/ipr/page/" class="card-link">
+                    <div class="card">
+                        <h2>{{ ipr_count }}</h2>
+                        <p>IPR Records</p>
+                    </div>
+                </a>
+            {% endif %}
+
+            {% if is_admin or role == "Entrepreneur" or role == "Policymaker" %}
+                <a href="/api/startup/page/" class="card-link">
+                    <div class="card">
+                        <h2>{{ startup_count }}</h2>
+                        <p>Startups</p>
+                    </div>
+                </a>
+            {% endif %}
+
+        </div>
+
+        <div class="modules">
+            <h2>Available Modules</h2>
+
+            <ul>
+                {% if is_admin or role == "Researcher" or role == "Policymaker" %}
+                    <li><a href="/api/projects/">Research Project Management</a></li>
+                {% endif %}
+
+                {% if is_admin or role == "Innovator" or role == "Policymaker" %}
+                    <li><a href="/api/innovation/page/">Innovation Management</a></li>
+                {% endif %}
+
+                {% if is_admin or role == "IPR Professional" or role == "Policymaker" %}
+                    <li><a href="/api/ipr/page/">IPR Management</a></li>
+                {% endif %}
+
+                {% if is_admin or role == "Entrepreneur" or role == "Policymaker" %}
+                    <li><a href="/api/startup/page/">Startup Management</a></li>
+                {% endif %}
+            </ul>
+        </div>
+
+    </div>
+
+    <div class="footer">
+        Gujarat Research, IPR, Innovation & Startup Monitoring System
+    </div>
+
+</body>
+</html>
