@@ -13,3 +13,7 @@ media/
 .idea/
 .DS_Store
 Thumbs.db
+.neon
+node_modules/
+
+local_data_backup.json
